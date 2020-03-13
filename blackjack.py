@@ -35,6 +35,21 @@ class BlackJack:
         jogadas = jogador.get_jogadas()
         jogador.set_jogadas((jogadas - 1))
 
+    def verificar_ganhador(self, lista_jogadores: list):
+        scores = []
+        vencedor = [0, 0]
+        for jogador in lista_jogadores:
+            scores.append((jogador.nome, jogador.get_score()))
+            if jogador.get_venceu() is True:
+                return jogador
+
+            if jogador.get_score() > vencedor[1]:
+                vencedor[1] = jogador.get_score()
+                vencedor[0] = jogador
+
+        vencedor[0].set_venceu(True)
+        return vencedor[0]
+
     def jogar(self, jogador: Jogador):
         if jogador.get_jogadas() < 1:
             jogador.set_venceu(False)

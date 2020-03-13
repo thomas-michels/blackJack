@@ -7,6 +7,10 @@ class Jogador:
         self.cards = []
         self.__jogadas_restantes = 5
         self.__venceu = None
+        self.__jogar = True
+
+    def set_jogar(self, jogar):
+        self.__jogar = jogar
 
     def set_jogadas(self, jogadas):
         self.__jogadas_restantes = jogadas
@@ -15,10 +19,13 @@ class Jogador:
         self.__venceu = venceu
 
     def set_cards(self, cards):
-        self.__cards = cards
+        self.cards = cards
 
     def set_score(self, score):
-        self.__score = score
+        self.score = score
+
+    def get_jogar(self):
+        return self.__jogar
 
     def get_jogadas(self):
         return self.__jogadas_restantes
@@ -27,10 +34,10 @@ class Jogador:
         return self.__venceu
 
     def get_cards(self) -> list:
-        return self.__cards
+        return self.cards
 
     def get_score(self):
-        return self.__score
+        return self.score
 
     def __str__(self):
-        return f'{self.nome};{self.__score};{self.__cards};{self.__jogadas_restantes};{self.__venceu}'
+        return f'{self.nome};{self.score};{self.cards};{self.__jogadas_restantes};{self.__venceu}'

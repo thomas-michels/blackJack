@@ -43,15 +43,18 @@ class BlackJack:
         return False
 
     def verificar_ganhador(self, lista_jogadores: list) -> list:
-        vencedor = [lista_jogadores[0]]
+        vencedor = []
+        maior_score = 0
         for jogador in lista_jogadores:
 
             if jogador.nome != 'Mesa':
-                if 22 > jogador.get_score() > vencedor[0].get_score():
-                    vencedor.pop(0)
+                if 22 > jogador.get_score() > maior_score:
+                    if len(vencedor) > 0:
+                        vencedor.pop(0)
                     vencedor.append(jogador)
+                    maior_score = jogador.get_score()
 
-                elif jogador.get_score() == vencedor[0].get_score():
+                elif jogador.get_score() == maior_score:
                     vencedor.append(jogador)
 
         for jogador in vencedor:

@@ -47,15 +47,14 @@ class BlackJack:
         maior_score = 0
         for jogador in lista_jogadores:
 
-            if jogador.nome != 'Mesa':
-                if 22 > jogador.get_score() > maior_score:
-                    if len(vencedor) > 0:
-                        vencedor.pop(0)
-                    vencedor.append(jogador)
-                    maior_score = jogador.get_score()
+            if 22 > jogador.get_score() > maior_score:
+                if len(vencedor) > 0:
+                    vencedor.pop(0)
+                vencedor.append(jogador)
+                maior_score = jogador.get_score()
 
-                elif jogador.get_score() == maior_score:
-                    vencedor.append(jogador)
+            elif jogador.get_score() == maior_score:
+                vencedor.append(jogador)
 
         for jogador in vencedor:
             jogador.set_venceu(True)

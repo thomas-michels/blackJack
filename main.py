@@ -55,11 +55,9 @@ def jogar():
 
     if len(ganhador) > 1:
         print('Empate')
-        print(ganhador)
 
     else:
         print(f'{ganhador[0].nome} ganhou com o score {ganhador[0].get_score()} e com as cartas {ganhador[0].get_cards()}')
-
 
 if __name__ == '__main__':
     jogar()

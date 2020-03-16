@@ -38,6 +38,3 @@ class Jogador:
 
     def get_score(self):
         return self.score
-
-    def __str__(self):
-        return f'{self.nome};{self.score};{self.cards};{self.__jogadas_restantes};{self.__venceu}'

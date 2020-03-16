@@ -1,5 +1,5 @@
-from score_cards import ScoreCards
-from jogador import Jogador
+from Data.score_cards import ScoreCards
+from Model.jogador import Jogador
 
 
 class CalculadoraScore:
@@ -13,7 +13,8 @@ class CalculadoraScore:
         lista_cartas_jogador = jogador.get_cards()
 
         for carta in lista_cartas_jogador:
-            if carta == 'A' and len(lista_cartas_jogador) > 2:
+            indice = lista_cartas_jogador.index(carta)
+            if carta == 'A' and indice > 1:
                 score += 1
 
             else:
@@ -23,6 +24,7 @@ class CalculadoraScore:
 
         if score == 21:
             jogador.set_venceu(True)
+            jogador.set_jogar(False)
 
         elif score > 21:
             jogador.set_venceu(False)

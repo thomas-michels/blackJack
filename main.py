@@ -1,5 +1,5 @@
-from blackjack import BlackJack
-from jogador import Jogador
+from Model.blackjack import BlackJack
+from Model.jogador import Jogador
 
 def jogar():
     bj = BlackJack()
@@ -13,64 +13,53 @@ def jogar():
         lista_jogadores.append(jogador)
 
     sair = False
+
     bj.jogar(lista_jogadores[0])
     bj.jogar(lista_jogadores[0])
-    indice = 0
+    cont_rodada = 1
+
     while not sair:
-
-        cont_jogador = 0
         for jogador in lista_jogadores:
-            if jogador.nome != 'Mesa':
-                if jogador.get_jogar() is False:
-                    cont_jogador += 1
 
-        if (cont_jogador + 1) == len(lista_jogadores):
-            mesa = lista_jogadores[0]
-            if mesa.get_score() < jogador.get_score() and mesa.get_score() < 17:
-                bj.jogar(mesa)
+            if bj.verificar_jogadores_disponiveis(lista_jogadores) is False:
+                sair = True
+                continue
 
-            sair = True
-            continue
+            if jogador.nome == 'Mesa':
+                continue
 
-        if indice > (len(lista_jogadores) - 1): # Verificação de indice dentro da lista
-            indice = 0
-
-        jogador = lista_jogadores[indice]
-
-        if jogador.get_venceu() is True:
-            print(f'{jogador.nome} Venceu com o score {jogador.score}')
-            sair = True
-            continue
-
-        if jogador.nome == 'Mesa':
-            indice += 1
-            continue
-
-        if jogador.get_jogar() is True:
             bj.jogar(jogador)
 
-        print(f'{lista_jogadores[0].nome} - Cartas: {lista_jogadores[0].cards[0]}')
-        print(f'{jogador.nome} - Cartas: {jogador.cards} - Score: {jogador.score} - Jogadas Restantes: {jogador.get_jogadas()}')
+            print(f'###  Rodada {cont_rodada}  ###')
+            print(f'{lista_jogadores[0].nome} - Cartas: {lista_jogadores[0].cards[0]}')
+            print(f'{jogador.nome} - Cartas: {jogador.cards} - Score: {jogador.get_score()}')
+            print(f'Jogadas restantes: {jogador.get_jogadas()}')
+            print('')
 
-        opcao = input(f'Deseja continuar {jogador.nome}? S/N: ')
-        if opcao.upper() == 'N':
-            jogador.set_jogar(False)
+            if cont_rodada > 1:
+                if jogador.get_jogar() is True:
+                    opcao = input(f'Deseja continuar {jogador.nome}? S/N: ')
 
-        indice += 1
+                    if opcao.upper() == 'N':
+                        jogador.set_jogar(False)
+
+        cont_rodada += 1
+
+    if lista_jogadores[0].get_score() < 17:
+        bj.jogar(lista_jogadores[0])
 
     ganhador = bj.verificar_ganhador(lista_jogadores)
-    print(ganhador)
-    print(ganhador.nome + " ganhou")
+
+    print('#' * 50)
+    print(f'{lista_jogadores[0].nome} - Cartas: {lista_jogadores[0].get_cards()} - Score: {lista_jogadores[0].get_score()}')
+
+    if len(ganhador) > 1:
+        print('Empate')
+        print(ganhador)
+
+    else:
+        print(f'{ganhador[0].nome} ganhou com o score {ganhador[0].get_score()} e com as cartas {ganhador[0].get_cards()}')
+
 
 if __name__ == '__main__':
     jogar()
-    # b = BlackJack()
-    # j1 = Jogador("a")
-    # j2 = Jogador('b')
-    # b.jogar(j1)
-    # b.jogar(j2)
-    # print(j1)
-    # print(j2)
-    # b.jogar(j1)
-    # print(j1)
-    # print(j2)

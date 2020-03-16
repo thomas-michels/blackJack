@@ -6,11 +6,29 @@ def jogar():
     mesa = Jogador('Mesa')
     lista_jogadores = [mesa]
     print('#####  Bem vindo ao Black Jack  #####')
-    jogadores = int(input('Insira quantos jogadores irão jogar: '))
+    sair = False
+    while not sair:
+        try:
+            jogadores = int(input('Insira quantos jogadores irão jogar: '))
+            sair = True
+
+        except ValueError:
+            print('Insira um numero valido')
+
     for i in range(0, jogadores):
-        nome = input("Nome do Jogador: ")
-        jogador = Jogador(nome)
-        lista_jogadores.append(jogador)
+        sair = False
+        while not sair:
+            try:
+                nome = input("Nome do Jogador: ")
+                if nome == 'Mesa':
+                    raise ValueError
+
+                jogador = Jogador(nome)
+                lista_jogadores.append(jogador)
+                sair = True
+
+            except ValueError:
+                print('Insira um nome diferente de "Mesa"')
 
     sair = False
 
@@ -45,7 +63,7 @@ def jogar():
 
         cont_rodada += 1
 
-    if lista_jogadores[0].get_score() < 17:
+    while lista_jogadores[0].get_score() < 17 and lista_jogadores[0].get_jogar() is True:
         bj.jogar(lista_jogadores[0])
 
     ganhador = bj.verificar_ganhador(lista_jogadores)
@@ -57,7 +75,11 @@ def jogar():
         print('Empate')
 
     else:
-        print(f'{ganhador[0].nome} ganhou com o score {ganhador[0].get_score()} e com as cartas {ganhador[0].get_cards()}')
+        try:
+            print(f'{ganhador[0].nome} ganhou com o score {ganhador[0].get_score()} e com as cartas {ganhador[0].get_cards()}')
+
+        except IndexError:
+            print('Mesa ganhou')
 
 if __name__ == '__main__':
     jogar()
